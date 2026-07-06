@@ -21,23 +21,19 @@ export class ApiService {
   login(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/User/login`, data);
   }
-
   register(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/User`, data);
   }
   getProducts(): Observable<any> {
     return this.http.get(`${this.baseUrl}/Product`, { headers: this.getHeaders() });
   }
-
   getCart(): Observable<any> {
     return this.http.get(`${this.baseUrl}/Cart`, { headers: this.getHeaders() });
   }
-
   addToCart(cartData: { productId: string, quantity: number }): Observable<any> {
     return this.http.post(`${this.baseUrl}/Cart`, cartData, { headers: this.getHeaders() });
   }
-
-  getOrders(): Observable<any> {
+  getOrders():Observable<any> {
     return this.http.get(`${this.baseUrl}/Order`, { headers: this.getHeaders() });
   }
 

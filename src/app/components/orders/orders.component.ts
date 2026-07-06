@@ -40,7 +40,7 @@ export class OrdersComponent implements OnInit {
     this.apiService.cancelOrder(orderId).subscribe({
       next: () => {
         this.showSuccess('Order cancelled successfully');
-        this.fetchOrders(); // Refresh list to update total and status
+        this.fetchOrders(); 
       },
       error: () => this.showError('Failed to cancel order')
     });
