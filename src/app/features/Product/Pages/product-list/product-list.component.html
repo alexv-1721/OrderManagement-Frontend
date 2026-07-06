@@ -1,0 +1,39 @@
+<div class="products-container">
+  <div class="header-section">
+    <h2 style="color: orange;">Discover Products</h2>
+    <p style="color: white;">Explore our premium collection</p>
+  </div>
+
+  <p-messages [(value)]="messages" [enableService]="false"></p-messages>
+
+  <div class="products-grid">
+    <p-card *ngFor="let product of products" class="product-card">
+      <ng-template pTemplate="header">
+        <div class="product-image">
+          <img [src]="'assets/images/' + product.productImage">
+          <div class="category-badge">{{product.category}}</div>
+        </div>
+      </ng-template>
+      <div class="product-details">
+        <div class="title-row">
+          <h3>{{product.productName}}</h3>
+          <span class="price">${{product.price}}</span>
+        </div>
+        <p class="description">{{product.description}}</p>
+        <div class="rating-row">
+          <span class="rating"><i class="pi pi-star-fill"></i> {{product.rating}} ({{product.reviewCount}})</span>
+        </div>
+      </div>
+      <ng-template pTemplate="footer">
+        <div class="action-footer">
+          <button pButton *ngIf="!addedToCart.has(product.id)" 
+                  label="Add to Cart" icon="pi pi-shopping-cart" 
+                  class="w-full add-btn" (click)="addToCart(product.id)"></button>
+          <button pButton *ngIf="addedToCart.has(product.id)" 
+                  icon="pi pi-plus" label="Add More" 
+                  class="w-full p-button-success add-btn" (click)="addToCart(product.id)"></button>
+        </div>
+      </ng-template>
+    </p-card>
+  </div>
+</div>

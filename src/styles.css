@@ -1,1 +1,38 @@
-/* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-indigo/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+
+* {
+  box-sizing: border-box;
+}
+
+body{
+  background-color: black;
+}
+.p-card {
+  border-radius: 16px !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+}
+
+.p-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.1) !important;
+}
+
+
+.p-button {
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+}
+
+.p-button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}

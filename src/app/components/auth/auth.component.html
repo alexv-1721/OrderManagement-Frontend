@@ -1,0 +1,36 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>{{ isLogin ? 'Welcome Back' : 'Create Account' }}</h2>
+      <p>{{ isLogin ? 'Enter your details to access your account' : 'Sign up to get started' }}</p>
+    </div>
+
+    <p-messages [(value)]="messages" [enableService]="false"></p-messages>
+
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit()" class="auth-form">
+      
+      <div class="field" *ngIf="!isLogin">
+        <label for="name">Name</label>
+        <input id="name" type="text" pInputText formControlName="name" placeholder="John Doe" />
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" pInputText formControlName="email" placeholder="name@example.com" />
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" type="password" pInputText formControlName="password" placeholder="••••••••" />
+      </div>
+
+      <button pButton type="submit" [label]="isLogin ? 'Sign In' : 'Sign Up'" class="w-full submit-btn" [disabled]="authForm.invalid"></button>
+    </form>
+
+    <div class="auth-footer">
+      <p>{{ isLogin ? "Don't have an account?" : "Already have an account?" }} 
+        <a href="javascript:void(0)" (click)="toggleMode()">{{ isLogin ? 'Sign up' : 'Log in' }}</a>
+      </p>
+    </div>
+  </div>
+</div>

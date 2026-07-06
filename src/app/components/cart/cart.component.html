@@ -1,0 +1,30 @@
+<div class="cart-container">
+  <div class="header-section" *ngIf="cartItems.length !== 0">
+    <h2>Your Cart</h2>
+    <p>Review items ready for order</p>
+  </div>
+
+  <p-messages [(value)]="messages" [enableService]="false"></p-messages>
+
+  <div *ngIf="cartItems.length === 0" class="empty-state">
+    <p>Your cart is empty.</p>
+    <button pButton routerLink="/products" label="Continue Shopping" class="p-button-outlined"></button>
+  </div>
+
+  <div class="cart-grid" *ngIf="cartItems.length > 0">
+    <p-card *ngFor="let item of cartItems" class="cart-card">
+      <div class="cart-item-content">
+        <div class="item-image">
+          <img [src]="item.productImage" [alt]="item.productName" />
+        </div>
+        <div class="item-details">
+          <h3>{{item.productName}}</h3>
+          <span class="price">${{item.price}}</span>
+        </div>
+        <div class="item-actions">
+          <button pButton icon="pi pi-check" label="Add to Order" class="p-button-success" (click)="addToOrder(item)"></button>
+        </div>
+      </div>
+    </p-card>
+  </div>
+</div>

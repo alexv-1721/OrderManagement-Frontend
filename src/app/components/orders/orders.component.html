@@ -1,0 +1,50 @@
+<div class="orders-container">
+  <div class="header-section">
+    <h2>Your Orders</h2>
+    <p>Manage your placed orders</p>
+  </div>
+
+  <p-messages [(value)]="messages" [enableService]="false"></p-messages>
+
+  <div *ngIf="orders.length === 0" class="empty-state">
+    <i class="pi pi-box empty-icon"></i>
+    <p>You have no orders yet.</p>
+    <button pButton routerLink="/products" label="Start Shopping" class="p-button-outlined"></button>
+  </div>
+
+  <div class="orders-content" *ngIf="orders.length > 0">
+    <div class="orders-list">
+      <p-card *ngFor="let order of orders" class="order-card" [ngClass]="{'cancelled': order.status === 'Cancelled'}">
+        <div class="order-item">
+          <div class="order-info">
+            <h4>Order #{{order.id}}</h4>
+            <span class="date">Placed on: {{order.orderDate | date:'mediumDate'}}</span>
+            <div class="status-badge" [ngClass]="order.status.toLowerCase()">{{order.status}}</div>
+          </div>
+          <div class="order-details">
+            <span class="qty">Qty: {{order.quantity}}</span>
+            <span class="price">${{order.totalPrice | number:'1.2-2'}}</span>
+          </div>
+          <div class="order-actions">
+            <button pButton *ngIf="order.status !== 'Cancelled'" icon="pi pi-times" label="Cancel Order" class="p-button-danger p-button-text" (click)="cancelOrder(order.id)"></button>
+          </div>
+        </div>
+      </p-card>
+    </div>
+
+    <div class="summary-section">
+      <p-card class="summary-card">
+        <h3>Order Summary</h3>
+        <div class="summary-row">
+          <span>Active Orders</span>
+          <span>{{ (orders | keyvalue)?.length || 0 }}</span>
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-row total">
+          <span>Total Bill</span>
+          <span>${{totalBill | number:'1.2-2'}}</span>
+        </div>
+      </p-card>
+    </div>
+  </div>
+</div>
