@@ -11,6 +11,8 @@ export class OrdersComponent implements OnInit {
   orders: any[] = [];
   messages: Message[] = [];
   totalBill: number = 0;
+  displayDialog: boolean = false;
+  selectedOrder: any;
 
   constructor(private apiService: ApiService) {}
 
@@ -38,10 +40,16 @@ export class OrdersComponent implements OnInit {
     this.apiService.cancelOrder(orderId).subscribe({
       next: () => {
         this.showSuccess('Order cancelled successfully');
-        this.fetchOrders(); 
+        this.orders = this.orders.filter(o => o.id !== orderId);
+        this.calculateTotal();
       },
       error: () => this.showError('Failed to cancel order')
     });
+  }
+
+  showDetails(order: any) {
+    this.selectedOrder = order;
+    this.displayDialog = true;
   }
 
   showError(msg: string) {

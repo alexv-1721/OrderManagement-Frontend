@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../../services/api.service';
 import { Message } from 'primeng/api';
+import { Router } from '@angular/router';
+import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-product-list',
@@ -11,18 +13,25 @@ export class ProductListComponent implements OnInit {
   products: any[] = [];
   messages: Message[] = [];
   addedToCart: Set<string> = new Set<string>();
+  displayDialog: boolean = false;
+  selectedProduct: any;
 
-  constructor(private apiService: ApiService) {}
-
+  constructor(private apiService: ApiService, private router: Router) {}
+  loading: boolean = true;
   ngOnInit(): void {
     if (!localStorage.getItem('token')) {
       window.location.href = '/login';
       return;
     }
+
     this.fetchProducts();
   }
 
   fetchProducts() {
+ setTimeout(() => {
+      this.loading = false;
+    }, 800); 
+   
     this.apiService.getProducts().subscribe({
       next: (res) => {
         if (res.success && res.data) {
@@ -41,6 +50,10 @@ export class ProductListComponent implements OnInit {
       },
       error: () => this.showError('Failed to add to cart')
     });
+  }
+
+  showDetails(product: any) {
+    this.router.navigate(['/products', product.id]);
   }
 
   showError(msg: string) {

@@ -48,6 +48,8 @@
 
 .order-card {
   width: 100%;
+  background: white;
+  border-radius: 8px;
 }
 
 .order-card.cancelled {

@@ -41,6 +41,8 @@
 
 .cart-card {
   width: 100%;
+  background: white;
+  border-radius: 8px;
 }
 
 ::ng-deep .cart-card .p-card-body {

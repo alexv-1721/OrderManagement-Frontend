@@ -1,30 +1,50 @@
 <div class="cart-container">
   <div class="header-section" *ngIf="cartItems.length !== 0">
-    <h2>Your Cart</h2>
-    <p>Review items ready for order</p>
+    <h2 style="color: orange;">Your Cart</h2>
+    <p style="color: white;">Review items ready for order</p>
   </div>
 
   <p-messages [(value)]="messages" [enableService]="false"></p-messages>
 
   <div *ngIf="cartItems.length === 0" class="empty-state">
+    <i class="pi pi-shopping-cart empty-icon"></i>
     <p>Your cart is empty.</p>
     <button pButton routerLink="/products" label="Continue Shopping" class="p-button-outlined"></button>
   </div>
 
   <div class="cart-grid" *ngIf="cartItems.length > 0">
     <p-card *ngFor="let item of cartItems" class="cart-card">
-      <div class="cart-item-content">
+      <div class="cart-item-content" (click)="showDetails(item)" style="cursor: pointer;">
         <div class="item-image">
-          <img [src]="item.productImage" [alt]="item.productName" />
+          <img [src]="'assets/images/' + item.productImage">
         </div>
         <div class="item-details">
           <h3>{{item.productName}}</h3>
           <span class="price">${{item.price}}</span>
-        </div>
-        <div class="item-actions">
-          <button pButton icon="pi pi-check" label="Add to Order" class="p-button-success" (click)="addToOrder(item)"></button>
+          <p class="description">{{item.description}}</p>
+          <div class="quantity-row">
+            <span>Quantity: {{item.quantity}}</span>
+            <span>Total Price: ${{(item.price * item.quantity).toFixed(2)}}</span>
+          </div>
+          <button style="margin-top: 0.5rem;" pButton icon="pi pi-trash" label="Remove" class="p-button-danger p-button-sm mt-2" (click)="removeFromCart(item); $event.stopPropagation()"></button>
         </div>
       </div>
     </p-card>
   </div>
+
+  <div class="checkout-section" *ngIf="cartItems.length > 0" style="margin-top: 2rem; padding: 1rem; background: var(--surface-card); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+    <h3>Total Price: ${{totalPrice.toFixed(2)}}</h3>
+    <button pButton icon="pi pi-check" label="Add to Order" class="p-button-success" (click)="checkout()"></button>
+  </div>
 </div>
+
+<p-dialog *ngIf="selectedItem" [(visible)]="displayDialog" [modal]="true" [style]="{width: '50vw'}" header="Product Details">
+  <div style="text-align: center;">
+    <img [src]="'assets/images/' + selectedItem.productImage" style="max-width: 100%; border-radius: 8px;">
+    <h2>{{selectedItem.productName}}</h2>
+    <p><strong>Category:</strong> {{selectedItem.category}}</p>
+    <p><strong>Price:</strong> ${{selectedItem.price}}</p>
+    <p>{{selectedItem.description}}</p>
+    <p><i class="pi pi-star-fill" style="color: #f59e0b;"></i> {{selectedItem.rating}} ({{selectedItem.reviewCount}} reviews)</p>
+  </div>
+</p-dialog>

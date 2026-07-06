@@ -3,11 +3,14 @@
     <h2 style="color: orange;">Discover Products</h2>
     <p style="color: white;">Explore our premium collection</p>
   </div>
+<div *ngIf="loading" class="spinner-container">
+    <p-progressSpinner></p-progressSpinner>
+</div>
 
   <p-messages [(value)]="messages" [enableService]="false"></p-messages>
 
-  <div class="products-grid">
-    <p-card *ngFor="let product of products" class="product-card">
+  <div class="products-grid" *ngIf="!loading" >
+    <p-card *ngFor="let product of products" class="product-card"  >
       <ng-template pTemplate="header">
         <div class="product-image">
           <img [src]="'assets/images/' + product.productImage">
@@ -34,6 +37,11 @@
                   class="w-full p-button-success add-btn" (click)="addToCart(product.id)"></button>
         </div>
       </ng-template>
+      
+
+
     </p-card>
+    
   </div>
+  
 </div>

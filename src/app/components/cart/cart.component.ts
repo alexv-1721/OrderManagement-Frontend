@@ -10,30 +10,64 @@ import { Message } from 'primeng/api';
 export class CartComponent implements OnInit {
   cartItems: any[] = [];
   messages: Message[] = [];
+  totalPrice: number = 0;
+  displayDialog: boolean = false;
+  selectedItem: any;
 
   constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
     this.fetchCart();
   }
- fetchCart() {
+
+  fetchCart() {
     this.apiService.getCart().subscribe({
       next: (res) => {
         if (res.success && res.data) {
           this.cartItems = res.data;
+          this.cartItems.forEach(item => {
+            if (!item.productImage) {
+              item.productImage = 'default-image.jpg'; 
+            }
+          });
+          this.apiService.cartLength = this.cartItems.length;
+          this.calculateTotal();
         }
       },
       error: () => this.showError('Failed to fetch cart items')
     });
   }
 
-  addToOrder(item: any) {
-    this.apiService.createOrder({ productId: item.productId || item.id, quantity: 1 }).subscribe({
-      next: () => {
-        this.showSuccess('Added to order successfully');
+  calculateTotal() {
+    this.totalPrice = this.cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+  }
+
+  checkout() {
+    this.apiService.checkoutCart().subscribe({
+      next: (res) => {
+        this.showSuccess('Checkout successful! Orders created.');
+        this.cartItems = [];
+        this.apiService.cartLength = 0;
+        this.calculateTotal();
       },
-      error: () => this.showError('Failed to add to order')
+      error: () => this.showError('Checkout failed')
     });
+  }
+
+  removeFromCart(item: any) {
+    this.apiService.removeCart(item.id).subscribe({
+      next: () => {
+        this.showSuccess('Removed from cart successfully');
+        this.cartItems = this.cartItems.filter(c => c.id !== item.id);
+        this.calculateTotal();
+      },
+      error: () => this.showError('Failed to remove from cart')
+    });
+  }
+
+  showDetails(item: any) {
+    this.selectedItem = item;
+    this.displayDialog = true;
   }
 
   showError(msg: string) {

@@ -27,6 +27,8 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  background: white;
+  border-radius: 16px;
 }
 
 
@@ -73,7 +75,12 @@
   justify-content: space-between;
   align-items: flex-start;
 }
-
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
 .title-row h3 {
   margin: 0;
   font-size: 1.125rem;

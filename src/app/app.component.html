@@ -1,7 +1,7 @@
 <div class="app-container">
   <nav class="navbar" *ngIf="isLoggedIn()">
     <div class="nav-brand">
-      <span class="brand-text">Alex Order Management App</span>
+      <span class="brand-text" routerLink="/products" r style="cursor: pointer;"> Alex Order Management App</span>
     </div>
     
     <div class="nav-links">
@@ -9,8 +9,8 @@
     </div>
 
     <div class="nav-actions">
-      <button pButton type="button" icon="pi pi-shopping-cart" class="p-button-rounded p-button-text nav-icon" routerLink="/cart" pTooltip="Cart"></button>
-      <button pButton type="button" icon="pi pi-list" class="p-button-rounded p-button-text nav-icon" routerLink="/orders" pTooltip="Orders"></button>
+      <button pButton type="button" icon="pi pi-shopping-cart" class="p-button-rounded p-button-text nav-icon" routerLink="/cart" pTooltip="Cart"></button> <span class="cart-length">{{ getCartLength() }}</span>
+      <button pButton type="button" icon="pi pi-list" class="p-button-rounded p-button-text nav-icon" routerLink="/orders" pTooltip="Orders"></button> <span class="order-length">{{ getOrderLength() }}</span>
       <button pButton type="button" icon="pi pi-sign-out" class="p-button-rounded p-button-danger p-button-text nav-icon" (click)="logout()" pTooltip="Logout"></button>
     </div>
   </nav>

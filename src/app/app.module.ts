@@ -17,7 +17,9 @@ import { ProductListComponent } from './features/Product/Pages/product-list/prod
 import { AuthComponent } from './components/auth/auth.component';
 import { CartComponent } from './components/cart/cart.component';
 import { OrdersComponent } from './components/orders/orders.component';
-
+import { DialogModule } from 'primeng/dialog';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ProductViewComponent } from './components/product-view/product-view.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +29,8 @@ import { OrdersComponent } from './components/orders/orders.component';
     ProductListComponent,
     AuthComponent,
     CartComponent,
-    OrdersComponent
+    OrdersComponent,
+    ProductViewComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,9 @@ import { OrdersComponent } from './components/orders/orders.component';
     CardModule,
     InputTextModule,
     BadgeModule,
-    MessagesModule
+    MessagesModule,
+    DialogModule,
+    ProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
