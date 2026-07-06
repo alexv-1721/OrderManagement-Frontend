@@ -29,13 +29,11 @@ export class OrdersComponent implements OnInit {
       error: () => this.showError('Failed to fetch orders')
     });
   }
-
   calculateTotal() {
     this.totalBill = this.orders
       .filter(o => o.status !== 'Cancelled')
       .reduce((sum, current) => sum + current.totalPrice, 0);
   }
-
   cancelOrder(orderId: number) {
     this.apiService.cancelOrder(orderId).subscribe({
       next: () => {
