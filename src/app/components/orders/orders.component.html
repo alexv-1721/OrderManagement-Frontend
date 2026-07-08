@@ -60,14 +60,14 @@
   <div class="order-dialog-content">
     <div class="summary-info mb-4" style="background: white; padding: 1.5rem; border-radius: 8px;">
 
-      <p><strong>Placed On:</strong> {{selectedOrder.orderDate | date:'medium'}}</p>
+
       <p><strong>Total Billed:</strong> <span class="price">${{selectedOrder.totalPrice | number:'1.2-2'}}</span></p>
     </div>
 
     <h3>Order Items ({{selectedOrder.items.length}})</h3>
     <div class="items-list" style="display: flex; flex-direction: column; gap: 1rem;">
       <div *ngFor="let item of selectedOrder.items" class="order-item-card" style="display: flex; gap: 1.5rem; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 8px; align-items: center;">
-        <img [src]="'assets/images/' + item.productImage" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
+        <img [src]="'http://localhost:5142/' + item.productImage" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
         <div style="flex: 1;">
           <h4 style="margin: 0 0 0.5rem 0; color: #1e293b; font-size: 1.1rem;">{{item.productName}}</h4>
           <span style="font-size: 0.875rem; color: #64748b; background: #e0e7ff; padding: 0.2rem 0.6rem; border-radius: 12px;">{{item.category}}</span>

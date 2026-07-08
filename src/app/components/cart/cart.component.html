@@ -16,7 +16,7 @@
     <p-card *ngFor="let item of cartItems" class="cart-card">
       <div class="cart-item-content" (click)="showDetails(item)" style="cursor: pointer;">
         <div class="item-image">
-          <img [src]="'assets/images/' + item.productImage">
+          <img [src]="'http://localhost:5142/' + item.productImage">
         </div>
         <div class="item-details">
           <h3>{{item.productName}}</h3>

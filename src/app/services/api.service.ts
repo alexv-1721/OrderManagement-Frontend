@@ -9,6 +9,9 @@ export class ApiService {
   private baseUrl = 'http://localhost:5142/api';
   cartLength: number = 0;
   OrderLength: number = 0;
+  page: number = 1;
+  productsPerPage: number = 12;
+  TotalProducts: number = 0;
   constructor(private http: HttpClient) { 
 
     this.getCart().subscribe({
@@ -45,10 +48,13 @@ export class ApiService {
     return this.http.post(`${this.baseUrl}/User`, data);
   }
   getProducts(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/Product`, { headers: this.getHeaders() });
-  }
+  return this.http.get<any>(
+    `http://localhost:5142/odata/Product?$skip=${(this.page - 1) * this.productsPerPage}&$top=${this.productsPerPage}&$count=true`,
+    { headers: this.getHeaders() }
+  );
+}
   getProductById(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/Product/${id}`, { headers: this.getHeaders() });
+    return this.http.get(`http://localhost:5142/odata/Product/${id}`, { headers: this.getHeaders() });
   }
   getCart(): Observable<any> {
     return this.http.get(`${this.baseUrl}/Cart`, { headers: this.getHeaders() });
@@ -82,6 +88,14 @@ export class ApiService {
     this.cartLength = 0;
     return this.http.post(`${this.baseUrl}/Order/checkout`, {}, { headers: this.getHeaders() });
   }
-
+  searchProducts(searchTerm: string): Observable<any> {
+    return this.http.get(`http://localhost:5142/odata/Product?$filter=contains(ProductName,'${searchTerm}') or contains(Description,'${searchTerm}')&$skip=${(this.page - 1) * this.productsPerPage}&$top=${this.productsPerPage}`, { headers: this.getHeaders() });
+  }
+  loadProducts(): Observable<any> {
+  return this.http.get<any>(
+    `http://localhost:5142/odata/Product?$skip=${(this.page - 1) * this.productsPerPage}&$top=${this.productsPerPage}&$count=true`,
+    { headers: this.getHeaders() }
+  );
+}
 
 }

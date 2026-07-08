@@ -1,40 +1,67 @@
 <div class="products-container">
-  <div class="header-section">
-    <h2 style="color: orange;">Discover Products</h2>
-    <p style="color: white;">Explore our premium collection</p>
-  </div>
+<div class="header-section" style="margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center;">
+    
+    <h2 style="color:orange; margin:0;">Discover Products</h2>
+
+    <div style="display:flex; align-items:center; gap:10px;">
+        <label style="color:white; font-size:20px;">Search Products</label>
+
+        <input
+            pInputText
+            type="text"
+            [(ngModel)]="searchItem"
+            (input)="handleSearch()"
+            placeholder="Search..."
+            style="
+                width:260px;
+                padding:10px 14px;
+                border-radius:25px;
+                border:1px solid #555;
+                background:#2d2d2d;
+                color:white;
+                outline:none;
+                transition:all .3s ease;
+            "
+        />
+    </div>
+
+</div>
 <div *ngIf="loading" class="spinner-container">
     <p-progressSpinner></p-progressSpinner>
 </div>
 
   <p-messages [(value)]="messages" [enableService]="false"></p-messages>
 
-  <div class="products-grid" *ngIf="!loading" >
+  <div *ngIf="products.length === 0" style="color:white; text-align:center; font-size:20px; margin-top:20rem;">
+    Product not found...
+  </div>
+
+  <div class="products-grid" *ngIf="!loading && products.length > 0" >
     <p-card *ngFor="let product of products" class="product-card"  >
       <ng-template pTemplate="header">
         <div class="product-image">
-          <img [src]="'assets/images/' + product.productImage">
-          <div class="category-badge">{{product.category}}</div>
+          <img [src]="'http://localhost:5142/' + product.ProductImage">
+          <div class="category-badge">{{product.Category}}</div>
         </div>
       </ng-template>
       <div class="product-details">
         <div class="title-row">
-          <h3>{{product.productName}}</h3>
-          <span class="price">${{product.price}}</span>
+          <h3>{{product.ProductName}}</h3>
+          <span class="price">${{product.Price}}</span>
         </div>
-        <p class="description">{{product.description}}</p>
+        <p class="description">{{product.Description}}</p>
         <div class="rating-row">
-          <span class="rating"><i class="pi pi-star-fill"></i> {{product.rating}} ({{product.reviewCount}})</span>
+          <span class="rating"><i class="pi pi-star-fill"></i> {{product.Rating}} ({{product.ReviewCount}})</span>
         </div>
       </div>
       <ng-template pTemplate="footer">
         <div class="action-footer">
-          <button pButton *ngIf="!addedToCart.has(product.id)" 
+          <button pButton *ngIf="!addedToCart.has(product.Id)" 
                   label="Add to Cart" icon="pi pi-shopping-cart" 
-                  class="w-full add-btn" (click)="addToCart(product.id)"></button>
-          <button pButton *ngIf="addedToCart.has(product.id)" 
+                  class="w-full add-btn" (click)="addToCart(product.Id)"></button>
+          <button pButton *ngIf="addedToCart.has(product.Id)" 
                   icon="pi pi-plus" label="Add More" 
-                  class="w-full p-button-success add-btn" (click)="addToCart(product.id)"></button>
+                  class="w-full p-button-success add-btn" (click)="addToCart(product.Id)"></button>
         </div>
       </ng-template>
       
@@ -43,5 +70,8 @@
     </p-card>
     
   </div>
-  
+  <div *ngIf="loadingMore" style="display:flex; justify-content:center; padding: 2rem;">
+    <p-progressSpinner strokeWidth="4"></p-progressSpinner>
+  </div>
+
 </div>
